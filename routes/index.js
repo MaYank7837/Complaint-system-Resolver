@@ -74,9 +74,40 @@ router.post('/assign', (req, res, next) => {
 });
 
 // Junior Eng
-router.get('/jeng', ensureAuthenticated, (req, res, next) => {
-    console.log(req.session.passport.user.name);
-    res.render('junior/junior');
+router.get('/jeng', ensureAuthenticated, async (req, res, next) => {
+    const username = req.session.passport.user.username;
+
+    let datad = await ComplaintMapping.getUserByUsername(username, (err, data) => {
+        return data;
+    })
+
+    const tosend = await datad.map(async (dat) => {
+        console.log("data", dat)
+        let retarr = await Complaint.getComplaintById(dat.complaintID, (err, found) => {
+            console.log("found", found)
+            return found;
+
+
+        })
+        console.log("retarr", retarr)
+        return retarr;
+
+
+
+    })
+
+    Promise.all(tosend).then((value) => res.render('junior/junior', { data: value }))
+
+
+
+   
+
+
+
+
+
+
+
 });
 
 //Complaint

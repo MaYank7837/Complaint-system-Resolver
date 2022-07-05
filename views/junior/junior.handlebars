@@ -1,2 +1,24 @@
 JUNIOR ENG PAGE
 <h3>Hello {{user.name}} !!!</h3>
+
+ <table class="table table-bordered">
+  <thead class="table-success">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Complaint By</th>
+      <th scope="col">Description</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+        <tr>
+            <td>{{id}}</td>          
+            <td>{{name}}</td>
+            <td>{{desc}}</td>
+           
+        </tr>
+    {{/each}}
+    
+  </tbody>
+</table>
