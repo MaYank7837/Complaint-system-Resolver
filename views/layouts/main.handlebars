@@ -1,52 +1,89 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Complaint System</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-  </head>
-  <body>
-   
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
-        <a class="navbar-brand" href="#">Complaint System</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarColor02">
-            <ul class="navbar-nav ">
-                <li class="nav-item ">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                {{#if user}}
-                    <li class="nav-item "><a class="nav-link" href="/logout">Logout</a></li>
-                {{else}}
-                    <li class="nav-item "><a class="nav-link" href="/login">Login</a></li>
-                    <li class="nav-item "><a class="nav-link" href="/register">Register</a></li>
-                {{/if}}
-            </ul>
-            
-        </div>
+<head>
+    <meta charset="utf-8" />
+    <title>Complaint System</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 p-2 fixed-top">
+        <container class="mx-5 w-100">
+            <div class="d-flex flex-row justify-content-center">
+                <div>
+                    <a class="navbar-brand" href="#">
+                        <img src="/assets/solution.png" height="50px" width="50px" />
+                    </a>
+                </div>
+
+
+                <div class="collapse navbar-collapse" id="navbarColor02">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Dashboard
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Complaints
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Reports
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        {{#if user}}
+                        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                        {{else}}
+                        <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                        {{/if}}
+                    </ul>
+
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+                    aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            </div>
+        </container>
     </nav>
-    <div class="container">
-      {{#if success_msg}}
+    <div class="container overflow-auto mt-5 mb-5">
+        {{#if success_msg}}
         <div class="alert alert-success">{{success_msg}}</div>
-      {{/if}}
-      {{#if error_msg}}
+        {{/if}}
+        {{#if error_msg}}
         <div class="alert alert-danger">{{error_msg}}</div>
-      {{/if}}
-      {{#if error}}
+        {{/if}}
+        {{#if error}}
         <div class="alert alert-danger">{{error}}</div>
-      {{/if}}
-      {{#if errors}}
+        {{/if}}
+        {{#if errors}}
         {{#each errors}}
-          <div class="alert alert-danger">{{msg}}</div>
+        <div class="alert alert-danger">{{msg}}</div>
         {{/each}}
-      {{/if}}
-      {{{body}}}
+        {{/if}}
+        {{{body}}}
     </div>
-  </body>
+
+
+<footer class="bg-dark p-2 w-100 fixed-bottom">
+            <div class="d-flex flex-row justify-content-between w-100">
+                <div>
+                    <a class="navbar-brand" href="#">
+                        <img src="/assets/solution.png" height="50px" width="50px" />
+                    </a>
+                    <span class=" text-white text-xl">Resolver</span>
+                </div>
+                <div>
+                <p class="text-lg text-white align-middle pt-3">© 2022 &nbsp;  Resolver</p>
+                </div>
+            </div>
+        </footer>
+</body>
+
 </html>
