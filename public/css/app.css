@@ -1,0 +1,19 @@
+
+
+
+body{
+    background-color:#fff;
+    background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+}
+
+.setBgForForm{
+    background-color:#f7fcff;
+    background-image:
+        url('https://www.transparenttextures.com/patterns/cubes.png')
+}
+
+form{
+
+    background-color: #f7fcff;
+    background-image:url('https://www.transparenttextures.com/patterns/cubes.png');
+}
