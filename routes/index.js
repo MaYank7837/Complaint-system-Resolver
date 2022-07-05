@@ -75,6 +75,10 @@ router.post('/assign', (req, res, next) => {
 
 // Junior Eng
 router.get('/jeng', ensureAuthenticated, (req, res, next) => {
+	const username = req.session.passport.user.name;
+	 
+	console.log(id, 'id');
+	console.log(req.session.passport.user.name);
 	res.render('junior/junior');
 });
 
@@ -83,6 +87,13 @@ router.get('/complaint', ensureAuthenticated, (req, res, next) => {
 	//console.log(req.session.passport.username);
 	//console.log(user.name);
 	res.render('complaint', {
+		username: req.session.user
+	});
+});
+
+//Report complaint
+router.get('/reports', ensureAuthenticated, (req, res, next) => {
+	res.render('reports', {
 		username: req.session.user
 	});
 });
