@@ -10,7 +10,7 @@ const ComplaintMappingSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    engineerName: {
+    technicianName: {
         type: String,
         required: true
     }
@@ -22,7 +22,7 @@ module.exports.registerMapping = function (newComplaintMapping, callback) {
     newComplaintMapping.save(callback);
 }
 module.exports.getUserByUsername = async function (username, callback) {
-    const query = { engineerName: username }
+    const query = { technicianName: username }
     let data = await ComplaintMapping.find(query, callback);
     return data;
 

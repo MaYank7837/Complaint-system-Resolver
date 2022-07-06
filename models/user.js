@@ -57,7 +57,7 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     });
 }
 
-module.exports.getEngineer = function(callback){
-    const query = {role: "jeng"}
+module.exports.getTechnician = function(callback){
+    const query = {role: "technician"}
     User.find(query, callback);
 }

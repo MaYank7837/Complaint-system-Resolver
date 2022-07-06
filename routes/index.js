@@ -8,10 +8,12 @@ let Complaint = require('../models/complaint');
 let ComplaintMapping = require('../models/complaint-mapping');
 
 // Home Page - Dashboard
+ 
 router.get('/', (req, res, next) => {
 	res.render('index');
+	 
 });
-
+ 
 // Login Form
 router.get('/login', (req, res, next) => {
 	res.render('login');
@@ -30,16 +32,17 @@ router.get('/logout', ensureAuthenticated, (req, res, next) => {
 });
 
 // supervisor
-router.get('/admin', ensureAuthenticated, (req, res, next) => {
+router.get('/supervisor', ensureAuthenticated, (req, res, next) => {
 	Complaint.getAllComplaints((err, complaints) => {
 		if (err) throw err;
 
-		User.getEngineer((err, engineer) => {
+		User.getTechnician((err, technician) => {
 			if (err) throw err;
-
-			res.render('admin/admin', {
+			let technicianName = req.body.technicianName;
+			console.log("before assign",technicianName);
+			res.render('supervisor/supervisor', {
 				complaints: complaints,
-				engineer: engineer
+				technician: technician
 			});
 		});
 	});
@@ -48,33 +51,33 @@ router.get('/admin', ensureAuthenticated, (req, res, next) => {
 // Assign the Complaint to  technician
 router.post('/assign', (req, res, next) => {
 	const complaintID = req.body.complaintID;
-	const engineerName = req.body.engineerName;
-
+	const technicianName = req.body.technicianName;
+    console.log("after assign",technicianName);
 	req.checkBody('complaintID', 'Contact field is required').notEmpty();
-	req.checkBody('engineerName', 'Description field is required').notEmpty();
+	req.checkBody('technicianName', 'Description field is required').notEmpty();
 
 	let errors = req.validationErrors();
 
 	if (errors) {
-		res.render('admin/admin', {
+		res.render('supervisor/supervisor', {
 			errors: errors
 		});
 	} else {
 		const newComplaintMapping = new ComplaintMapping({
 			complaintID: complaintID,
-			engineerName: engineerName
+			technicianName: technicianName
 		});
 
 		ComplaintMapping.registerMapping(newComplaintMapping, (err, complaint) => {
 			if (err) throw err;
-			req.flash('success_msg', 'You have successfully assigned a complaint to Engineer');
-			res.redirect('/admin');
+			req.flash('success_msg', 'You have successfully assigned a complaint to Technician');
+			res.redirect('/supervisor');
 		});
 	}
 });
 
-// Junior Eng
-router.get('/jeng', ensureAuthenticated, async (req, res, next) => {
+// Technician
+router.get('/technician', ensureAuthenticated, async (req, res, next) => {
 	const username = req.session.passport.user.username;
 
 	let datad = await ComplaintMapping.getUserByUsername(username, (err, data) => {
@@ -91,7 +94,7 @@ router.get('/jeng', ensureAuthenticated, async (req, res, next) => {
 		return retarr;
 	});
 
-	Promise.all(tosend).then((value) => res.render('junior/junior', { data: value }));
+	Promise.all(tosend).then((value) => res.render('technician/technician', { data: value }));
 });
 
 //Complaint
@@ -239,10 +242,10 @@ router.post(
 			if (err) {
 				return next(err);
 			}
-			if (req.user.role === 'admin') {
-				res.redirect('/admin');
-			} else if (req.user.role === 'jeng') {
-				res.redirect('/jeng');
+			if (req.user.role === 'supervisor') {
+				res.redirect('/supervisor');
+			} else if (req.user.role === 'technician') {
+				res.redirect('/technician');
 			} else {
 				res.redirect('/');
 			}
