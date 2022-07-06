@@ -29,7 +29,7 @@ router.get('/logout', ensureAuthenticated, (req, res, next) => {
 	res.redirect('/login');
 });
 
-// Admin
+// supervisor
 router.get('/admin', ensureAuthenticated, (req, res, next) => {
 	Complaint.getAllComplaints((err, complaints) => {
 		if (err) throw err;
@@ -75,39 +75,23 @@ router.post('/assign', (req, res, next) => {
 
 // Junior Eng
 router.get('/jeng', ensureAuthenticated, async (req, res, next) => {
-    const username = req.session.passport.user.username;
+	const username = req.session.passport.user.username;
 
-    let datad = await ComplaintMapping.getUserByUsername(username, (err, data) => {
-        return data;
-    })
+	let datad = await ComplaintMapping.getUserByUsername(username, (err, data) => {
+		return data;
+	});
 
-    const tosend = await datad.map(async (dat) => {
-        console.log("data", dat)
-        let retarr = await Complaint.getComplaintById(dat.complaintID, (err, found) => {
-            console.log("found", found)
-            return found;
+	const tosend = await datad.map(async (dat) => {
+		console.log('data', dat);
+		let retarr = await Complaint.getComplaintById(dat.complaintID, (err, found) => {
+			console.log('found', found);
+			return found;
+		});
+		console.log('retarr', retarr);
+		return retarr;
+	});
 
-
-        })
-        console.log("retarr", retarr)
-        return retarr;
-
-
-
-    })
-
-    Promise.all(tosend).then((value) => res.render('junior/junior', { data: value }))
-
-
-
-   
-
-
-
-
-
-
-
+	Promise.all(tosend).then((value) => res.render('junior/junior', { data: value }));
 });
 
 //Complaint
